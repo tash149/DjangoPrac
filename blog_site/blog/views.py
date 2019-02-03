@@ -5,7 +5,11 @@ from django.core.paginator import Paginator, EmptyPage,\
 from django.views.generic import ListView
 
 def post_list(request):
-    object_list = Post.published.all()
+    posts = Post.published.all()
+    return render(request,
+        'blog/post/list.html',
+        {'posts': posts}) 
+    """object_list = Post.published.all()
     paginator = Paginator(object_list, 3) # 3 posts in each page
     page = request.GET.get('page')
     try:
@@ -20,13 +24,7 @@ def post_list(request):
                   'blog/post/list.html',
                   {'page':page,
                   'posts': posts})
-
-    """
-    posts = Post.published.all()
-    return render(request,
-        'blog/post/list.html',
-        {'posts': posts}) 
-    """  
+"""
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
@@ -39,8 +37,9 @@ def post_detail(request, year, month, day, post):
     {'post': post})
 
 
-class PostListView(ListView):
+"""class PostListView(ListView):
     queryset = Post.published.all()
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post/list.html'
+"""
